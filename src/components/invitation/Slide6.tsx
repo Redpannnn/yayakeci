@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useInvitation } from "@/lib/invitation-store";
+import LazyBackground from "@/components/invitation/LazyBackground";
 
 const BG_IMAGE =
-  "https://imglinkv-3.vercel.app/api/images/cmwdgsc0wzfl25lw0/file";
+  "/images/cmwdgsc0wzfl25lw0.jpg";
 
 // Timeline perjalanan cerita kami — revisi per user request.
 const STORY = [
@@ -44,16 +45,7 @@ export default function Slide6() {
   return (
     <main className="relative flex min-h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
       {/* Background image — fixed (parallax), pure wallpaper */}
-      <motion.img
-        src={BG_IMAGE}
-        alt="Latar our story"
-        initial={{ scale: 1.08, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        className="h-full w-full object-cover"
-        style={{ position: "fixed", inset: 0, zIndex: 0 }}
-        loading="eager"
-      />
+      <LazyBackground src={BG_IMAGE} alt="Latar our story" />
       {/* Bg solid overlay #4D2A00 (80% opacity) — per user request, opacity
           tetap sama seperti versi putih. position: absolute supaya scoped
           ke slide 6. */}
