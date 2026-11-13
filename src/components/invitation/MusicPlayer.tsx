@@ -36,30 +36,24 @@ export default function MusicPlayer() {
     if (!audio) return;
 
     if (musicPlaying) {
-      // Delay kecil (800ms) setelah dibuka — kasih head start bandwidth ke
-      // video intro (416KB) biar nggak berebut dengan mp3 (1.6MB) di detik
-      // pertama. User nggak merasakan delay ini.
-      let fade: ReturnType<typeof setInterval> | undefined;
-      const startTimer = setTimeout(() => {
-        audio.volume = 0;
-        const p = audio.play();
-        if (p && typeof p.then === "function") {
-          p.catch(() => {
-            setMusicPlaying(false);
-          });
-        }
-        // fade volume in gently so the song doesn't blast in
-        let v = 0;
-        fade = setInterval(() => {
-          v = Math.min(0.85, v + 0.08);
-          audio.volume = v;
-          if (v >= 0.85 && fade) clearInterval(fade);
-        }, 80);
-      }, 800);
-      return () => {
-        clearTimeout(startTimer);
-        if (fade) clearInterval(fade);
-      };
+      // play() returns a promise; it can reject if the browser blocks
+      // autoplay (e.g. no prior user gesture). We catch silently and let
+      // the user click the floating button to retry.
+      audio.volume = 0;
+      const p = audio.play();
+      if (p && typeof p.then === "function") {
+        p.catch(() => {
+          setMusicPlaying(false);
+        });
+      }
+      // fade volume in gently so the song doesn't blast in
+      let v = 0;
+      const fade = setInterval(() => {
+        v = Math.min(0.85, v + 0.08);
+        audio.volume = v;
+        if (v >= 0.85) clearInterval(fade);
+      }, 80);
+      return () => clearInterval(fade);
     } else {
       audio.pause();
     }
@@ -71,7 +65,7 @@ export default function MusicPlayer() {
 
   return (
     <>
-      <audio ref={audioRef} src={MUSIC_URL} loop preload="metadata" />
+      <audio ref={audioRef} src={MUSIC_URL} loop preload="auto" />
 
       <motion.button
         type="button"

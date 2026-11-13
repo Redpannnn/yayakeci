@@ -3,31 +3,30 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInvitation } from "@/lib/invitation-store";
-import LazyBackground from "@/components/invitation/LazyBackground";
 
 const BG_IMAGE =
-  "/images/cmwdgsc0wzfl25lw0.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdgsc0wzfl25lw0/file";
 
 // 5 foto galeri per user request.
 const PHOTOS = [
   {
-    src: "/images/cmwdb8d7dmvk2g9xg.jpg",
+    src: "https://imglinkv-3.vercel.app/api/images/cmwdb8d7dmvk2g9xg/file",
     alt: "Momen 1",
   },
   {
-    src: "/images/cmwdb8ashjtaehyzw.jpg",
+    src: "https://imglinkv-3.vercel.app/api/images/cmwdb8ashjtaehyzw/file",
     alt: "Momen 2",
   },
   {
-    src: "/images/cmwdb88at0dzea3y0.jpg",
+    src: "https://imglinkv-3.vercel.app/api/images/cmwdb88at0dzea3y0/file",
     alt: "Momen 3",
   },
   {
-    src: "/images/cmwdb85hpv14akk91.jpg",
+    src: "https://imglinkv-3.vercel.app/api/images/cmwdb85hpv14akk91/file",
     alt: "Momen 4",
   },
   {
-    src: "/images/cmwdb82qqqrqizphy.jpg",
+    src: "https://imglinkv-3.vercel.app/api/images/cmwdb82qqqrqizphy/file",
     alt: "Momen 5",
   },
 ];
@@ -53,7 +52,16 @@ export default function Slide5() {
     <main className="relative flex min-h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
       {/* Background image — fixed (parallax), PURE wallpaper tanpa overlay
           merah maroon (per user request). */}
-      <LazyBackground src={BG_IMAGE} alt="Latar our moment" />
+      <motion.img
+        src={BG_IMAGE}
+        alt="Latar our moment"
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        className="h-full w-full object-cover"
+        style={{ position: "fixed", inset: 0, zIndex: 0 }}
+        loading="eager"
+      />
       {/* Back button */}
       <button
         type="button"

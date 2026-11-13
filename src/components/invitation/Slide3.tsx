@@ -3,16 +3,15 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useInvitation } from "@/lib/invitation-store";
-import LazyBackground from "@/components/invitation/LazyBackground";
 
 const BG_IMAGE =
-  "/images/cmwdgsc0wzfl25lw0.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdgsc0wzfl25lw0/file";
 
 // Couple photos — foto mempelai pria & wanita (revisi per user request).
 const GROOM_PHOTO =
-  "/images/cmwdi06x5229yeabb.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdi06x5229yeabb/file";
 const BRIDE_PHOTO =
-  "/images/cmwdi05ceku7n8k3l.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdi05ceku7n8k3l/file";
 
 // The "&" decorative separator between the bride and groom blocks.
 const AMPERSAND_IMAGE =
@@ -43,7 +42,18 @@ export default function Slide3() {
     <main className="relative flex min-h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
       {/* Background image — FIXED (parallax) so it stays put while the user
           scrolls through the long content. */}
-      <LazyBackground src={BG_IMAGE} alt="Latar slide mempelai" />
+      <motion.img
+        src={BG_IMAGE}
+        alt="Latar slide mempelai"
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        className="h-full w-full object-cover"
+        style={{ position: "fixed", inset: 0, zIndex: 0 }}
+        loading="eager"
+        // @ts-expect-error -- fetchPriority is valid in React 19 but not in older types
+        fetchPriority="high"
+      />
 
       {/* Subtle top darkening so the back button & salam stays readable */}
       <div

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
  * Bird image source — a small bird PNG supplied by the user.
  */
 const BIRD_IMAGE =
-  "/images/cmt0ur079djwa5esx.png";
+  "https://imglinkv-3.vercel.app/api/images/cmt0ur079djwa5esx/file";
 
 type BirdConfig = {
   /** top offset as a percentage string (relative to the region height) */

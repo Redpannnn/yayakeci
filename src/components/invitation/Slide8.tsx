@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Loader2, Send } from "lucide-react";
 import { useInvitation } from "@/lib/invitation-store";
-import LazyBackground from "@/components/invitation/LazyBackground";
 
 const BG_IMAGE =
-  "/images/cmwdgsc0wzfl25lw0.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdgsc0wzfl25lw0/file";
 
 type Attendance = "hadir" | "tidak" | "ragu";
 
@@ -92,7 +91,16 @@ export default function Slide8() {
 
   return (
     <main className="relative flex min-h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
-      <LazyBackground src={BG_IMAGE} alt="Latar RSVP" />
+      <motion.img
+        src={BG_IMAGE}
+        alt="Latar RSVP"
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        className="h-full w-full object-cover"
+        style={{ position: "fixed", inset: 0, zIndex: 0 }}
+        loading="eager"
+      />
       {/* Bg solid overlay #4D2A00 (60% opacity) — per user request, opacity
           tetap sama seperti versi putih. position: absolute supaya scoped
           ke slide ini, nggak bocor ke slide lain. */}

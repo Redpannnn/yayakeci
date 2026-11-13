@@ -4,17 +4,15 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import { useInvitation } from "@/lib/invitation-store";
-import { prefetchIntroBlobUrl } from "@/lib/intro-cache";
 
-// Wallpaper video — LOKAL & sudah di-re-encode (720p CRF 27 + faststart,
-// tanpa audio): 4.8MB → 900KB. Konten video sama persis.
-const BG_IMAGE = "/video/wallpaper.mp4";
+const BG_IMAGE =
+  "https://imglinkv-3.vercel.app/api/images/cmwdm864566insd66/file";
+const COUPLE_PHOTO =
+  "https://imglinkv-3.vercel.app/api/images/cmwdb82qqqrqizphy/file";
 
-// Poster = frame pertama video. Langsung tampil saat halaman dibuka,
-// jadi user nggak nunggu video termuat dulu buat lihat background.
-const BG_POSTER = "/video/wallpaper-poster.jpg";
-
-const COUPLE_PHOTO = "/images/cmwdb82qqqrqizphy.jpg";
+// Video intro slide 2 — file LOKAL di /public/video biar loading-nya cepat
+// & stabil (nggak tergantung CDN eksternal). Di-preload diam-diam di cover.
+const INTRO_VIDEO = "/video/intro.mp4";
 
 // Staggered entrance animation
 const container = {
@@ -63,28 +61,27 @@ export default function Slide1Cover() {
       });
   }, []);
 
-  // Unduh byte video intro (section 2) di background sejak cover dibuka —
-  // lewat chunk JS (transport yang SAMA dengan seluruh UI aplikasi,
-  // terbukti selalu sampai) lalu disimpan sebagai blob di memori. TANPA
-  // element video tersembunyi — jadi nggak ada berebut pipeline media
-  // dengan video section 2 (pelajaran bug "video cuma jalan <1 detik").
-  // Pas user klik "Buka Undangan", video langsung play dari memori.
-  useEffect(() => {
-    prefetchIntroBlobUrl();
-  }, []);
-
   return (
     <main className="relative flex h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
+      {/* Hidden preloader — buffer video intro slide 2 dari sekarang */}
+      <video
+        src={INTRO_VIDEO}
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden
+        tabIndex={-1}
+        className="pointer-events-none absolute left-0 top-0 h-px w-px opacity-0"
+      />
+
       {/* Wallpaper — file .mp4, diputar sebagai video background */}
       <motion.video
         src={BG_IMAGE}
-        poster={BG_POSTER}
         aria-label="Latar video undangan pernikahan"
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
         initial={{ scale: 1.08, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}

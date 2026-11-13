@@ -2,14 +2,13 @@
 
 import { motion } from "framer-motion";
 import { useInvitation } from "@/lib/invitation-store";
-import LazyBackground from "@/components/invitation/LazyBackground";
 
 const BG_IMAGE =
-  "/images/cmwdgsc0wzfl25lw0.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdgsc0wzfl25lw0/file";
 
 // Couple photo for the closing capsule — foto baru per user request.
 const COUPLE_PHOTO =
-  "/images/cmwdb82qqqrqizphy.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdb82qqqrqizphy/file";
 
 const CLOSING_DOA =
   "Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do’a restu kepada kami.";
@@ -20,9 +19,9 @@ const INSTAGRAM_URL = "https://www.instagram.com/memoraainvitation/";
 const TIKTOK_URL = "https://www.tiktok.com/@memoraainvtitation._";
 
 const WHATSAPP_ICON =
-  "/images/cmw79rb651wumgvv6.png";
+  "https://imglinkv-3.vercel.app/api/images/cmw79rb651wumgvv6/file";
 const INSTAGRAM_ICON =
-  "/images/cmw79repvzc30frlt.png";
+  "https://imglinkv-3.vercel.app/api/images/cmw79repvzc30frlt/file";
 
 const container = {
   hidden: {},
@@ -42,7 +41,16 @@ export default function Slide9() {
 
   return (
     <main className="relative flex min-h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
-      <LazyBackground src={BG_IMAGE} alt="Latar penutup" />
+      <motion.img
+        src={BG_IMAGE}
+        alt="Latar penutup"
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        className="h-full w-full object-cover"
+        style={{ position: "fixed", inset: 0, zIndex: 0 }}
+        loading="eager"
+      />
       {/* Bg solid overlay putih (60% opacity, no blur) — di slide 9 aja.
           position: absolute supaya scoped ke slide 9, nggak bocor ke slide lain. */}
       <div

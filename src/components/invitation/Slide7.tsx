@@ -4,10 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gift, Copy, Check, ChevronDown } from "lucide-react";
 import { useInvitation } from "@/lib/invitation-store";
-import LazyBackground from "@/components/invitation/LazyBackground";
 
 const BG_IMAGE =
-  "/images/cmwdgsc0wzfl25lw0.jpg";
+  "https://imglinkv-3.vercel.app/api/images/cmwdgsc0wzfl25lw0/file";
 
 const GIFT_INTRO =
   "Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi melalui dibawah ini.";
@@ -92,7 +91,16 @@ export default function Slide7() {
 
   return (
     <main className="relative flex min-h-[100dvh] w-full flex-col items-center overflow-hidden bg-stone-100">
-      <LazyBackground src={BG_IMAGE} alt="Latar wedding gift" />
+      <motion.img
+        src={BG_IMAGE}
+        alt="Latar wedding gift"
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        className="h-full w-full object-cover"
+        style={{ position: "fixed", inset: 0, zIndex: 0 }}
+        loading="eager"
+      />
       <button
         type="button"
         onClick={() => goTo("cover")}
